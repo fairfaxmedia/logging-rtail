@@ -1,0 +1,38 @@
+# Most of these are disabling existing cops, primarily
+# due to a smattering of different styles and loose
+# guidlines for contributions.
+#
+# Any of these may be changed.
+
+# I personally believe double-quotes is more-idiomatic Ruby
+# StringLiterals:
+#   EnforcedStyle: double_quotes
+#  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%': '{}'
+    '%i': '{}'
+    '%q': '{}'
+    '%Q': '{}'
+    '%r': '{}'
+    '%s': '{}'
+    '%w': '{}'
+    '%W': '{}'
+    '%x': '{}'
+
+SpaceInsideBlockBraces:
+  SpaceBeforeBlockParameters: false
+
+LineLength:
+  Max: 120
+
+# Style/ClassAndModuleChildren:
+#   EnforcedStyle: compact
+
+Style/FileName:
+  Enabled: false
+
+# TODO: Disable before release
+# Documentation:
+#   Enabled: false

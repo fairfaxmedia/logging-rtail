@@ -29,7 +29,7 @@ module Logging::Appenders
     end
 
     def host; @host.dup; end
-    def port; @port.dup; end
+    def port; @port; end
 
     # Reopen the connection to the underlying logging destination. If the
     # connection is currently closed then it will be opened. If the connection

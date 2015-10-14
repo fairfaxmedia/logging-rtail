@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "logging"
+
+# NB: `little-plugger` handles loading the code, so the below is unneccessary:
+#require "logging/plugins/rtail"
+
+require "pry"
+Pry.start

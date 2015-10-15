@@ -1,4 +1,4 @@
-require "logging/rtail/version"
+require 'logging/rtail/version'
 
 module Logging
   module Rtail

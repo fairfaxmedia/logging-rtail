@@ -4,7 +4,7 @@ module Logging
     module Rtail
       extend self
 
-      VERSION = '0.1.2'.freeze unless defined? VERSION
+      VERSION = '0.1.3'.freeze unless defined? VERSION
 
       # Initialiser for `little-plugger`:
       def initialize_rtail

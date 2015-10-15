@@ -11,27 +11,27 @@ module Logging
 
     # This class provides an Appender that can write to a Rtail service over UDP.
     class Rtail < ::Logging::Appenders::IO
+      attr_reader :host, :port, :omit_timezone
+
       # Creates a new Rtail Appender that will use the given host and port
       # as the Rtail server destination.
       #
       # @param name [String] Stream ID to differentiate in the Rtail server
       # @param host [String] Host / IP of the Rtail server's UDP receiver (defaults to "localhost")
       # @param port [Integer] Port of the Rtail server's UDP receiver (defaults to 9999)
+      # @param omit_timezone [Boolean] When creating the time-stamp for a log entry, omit the time-zone specifier
       def initialize(name, opts = {})
         @host = opts.fetch(:host, 'localhost')
         @port = opts.fetch(:port, 9999)
+        # FIXME: Rtail Server needs to be fixed to allow log-time output in localtime, instead of UTC.
+        #        For now, users may need to do this:
+        @omit_timezone = opts.fetch(:omit_timezone, false)
 
         fail ArgumentError, 'Empty host and port is not appropriate' unless host && !host.empty? && port
 
         # Because it's UDP, we want it flushed to the server, immediately:
         super(name, connect(@host, @port), opts.merge(auto_flushing: true))
       end
-
-      def host
-        @host.dup
-      end
-
-      attr_reader :port
 
       # Reopen the connection to the underlying logging destination. If the
       # connection is currently closed then it will be opened. If the connection
@@ -59,7 +59,8 @@ module Logging
         return self if @io.nil?
 
         str = str.force_encoding(encoding) if encoding && str.encoding != encoding
-        @io.syswrite JSON.generate(id: name, timestamp: Time.now, content: str)
+        timestamp = omit_timezone ? Time.now.strftime('%FT%T') : Time.now.to_s
+        @io.syswrite JSON.generate(id: name, timestamp: timestamp, content: str)
 
         self
 

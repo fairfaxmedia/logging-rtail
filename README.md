@@ -53,6 +53,20 @@ l.add_appenders(
 )
 ```
 
+### Omitting Timezone from the Timestamp
+
+The Rtail server seems to output Timestamps in UTC uncomprimisingly, rather than localtime.
+This can make it a little confusing when watching the logs if you don't live in the UK.
+
+As a work-around, you can enable the option `omit_timezone` to the Rtail appender, and it will drop
+TZ information from the Timestamp it sends to the Rtail server:
+
+```ruby
+l.add_appenders(
+  Logging.appenders.rtail("Wild Test stream", omit_timezone: true)
+)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests.
